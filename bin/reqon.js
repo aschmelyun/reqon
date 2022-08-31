@@ -2,9 +2,21 @@
 import chalk from 'chalk'
 import figlet from 'figlet'
 import express from 'express'
+import minimist from 'minimist'
 
+const args = minimist(process.argv.slice(2))
 const listener = express()
 const dashboard = express()
+
+// set the default port as 8080
+if (!args.hasOwnProperty('port')) {
+    args['port'] = 8080;
+}
+
+// set the default dashboard port as 8081
+if (!args.hasOwnProperty('dashboard-port')) {
+    args['dashboard-port'] = 8081;
+}
 
 import listenerHandler from '../lib/routes/listener.js'
 
@@ -30,14 +42,14 @@ figlet('reqon', {
         res.send('Dashboard!')
     })
 
-    listener.listen(8080, () => {
+    listener.listen(args.port, () => {
         console.log(chalk.white('Listening for new requests'))
-        console.log(chalk.cyan.bold.underline('http://localhost:8080'))
+        console.log(chalk.cyan.bold.underline(`http://localhost:${args['port']}`))
         console.log('')
     })
 
-    dashboard.listen(8081, () => {
+    dashboard.listen(args.dashboardPort, () => {
         console.log(chalk.white('View requests in the dashboard'))
-        console.log(chalk.cyan.bold.underline('http://localhost:8081'))
+        console.log(chalk.cyan.bold.underline(`http://localhost:${args['dashboard-port']}`))
     })
 })

@@ -1,6 +1,6 @@
 {
     "name": "reqon",
-    "version": "1.0.0",
+    "version": "0.1.1",
     "description": "A simple dashboard to intercept and inspect http requests.",
     "main": "./lib/index.js",
     "type": "module",
@@ -16,7 +16,8 @@
         "express": "^4.18.1",
         "figlet": "^1.5.2",
         "log-timestamp": "^0.3.0",
-        "lowdb": "^3.0.0"
+        "lowdb": "^3.0.0",
+        "minimist": "^1.2.6"
     },
     "bin": {
         "reqon": "./bin/reqon.js"
