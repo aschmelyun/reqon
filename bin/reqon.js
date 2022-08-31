@@ -10,17 +10,17 @@ const dashboard = express()
 
 // set the default port as 8080
 if (!args.hasOwnProperty('port')) {
-    args['port'] = 8080;
+    args['port'] = 8080
 }
 
 // set the default dashboard port as 8081
 if (!args.hasOwnProperty('dashboard-port')) {
-    args['dashboard-port'] = 8081;
+    args['dashboard-port'] = 8081
 }
 
 // set the dashboard as enabled by default
 if (!args.hasOwnProperty('disable-dashboard')) {
-    args['disable-dashboard'] = false;
+    args['disable-dashboard'] = false
 }
 
 import listenerHandler from '../lib/routes/listener.js'
@@ -34,7 +34,7 @@ figlet('reqon', {
         console.dir(chalk.white.bgRed.bold(err))
         return
     }
-    console.clear();
+    console.clear()
     console.log(chalk.cyan.bold(data))
     console.log('')
 
