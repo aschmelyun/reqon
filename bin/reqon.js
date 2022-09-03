@@ -24,6 +24,14 @@ if (!args.hasOwnProperty('dashboard-port')) {
 
 import listenerHandler from '../lib/routes/listener.js'
 
+const __dirname = join(homedir(), '.reqon')
+if (!existsSync(__dirname)) {
+    mkdirSync(__dirname)
+}
+
+const adapter = new JSONFile(join(__dirname, 'db.json'))
+global.db = new Low(adapter)
+
 figlet('reqon', {
     font: 'Speed',
     verticalLayout: 'fitted',
@@ -35,17 +43,7 @@ figlet('reqon', {
     }
     console.clear()
     console.log(chalk.cyan.bold(data))
-    console.log('')
-
-    const __dirname = join(homedir(), '.reqon')
-
-    if (!existsSync(__dirname)) {
-        mkdirSync(__dirname)
-    }
-
-    const file = join(__dirname, 'db.json')
-    const adapter = new JSONFile(file)
-    global.db = new Low(adapter)
+    console.log('')  
 
     await db.read()
     db.data ||= { entries: [] }
