@@ -24,12 +24,12 @@ if (!args.hasOwnProperty('dashboard-port')) {
 
 import listenerHandler from '../lib/routes/listener.js'
 
-const __dirname = join(homedir(), '.reqon')
-if (!existsSync(__dirname)) {
-    mkdirSync(__dirname)
+global.__reqon = join(homedir(), '.reqon')
+if (!existsSync(__reqon)) {
+    mkdirSync(__reqon)
 }
 
-const adapter = new JSONFile(join(__dirname, 'db.json'))
+const adapter = new JSONFile(join(__reqon, 'db.json'))
 global.db = new Low(adapter)
 
 figlet('reqon', {
