@@ -8,7 +8,8 @@ import { Low, JSONFile } from 'lowdb'
 import { homedir } from 'os'
 import { existsSync, mkdirSync } from 'fs'
 
-const args = minimist(process.argv.slice(2))
+global.args = minimist(process.argv.slice(2))
+
 const listener = express()
 const dashboard = express()
 
