@@ -1,6 +1,6 @@
 {
     "name": "reqon",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "A simple dashboard to intercept and inspect http requests.",
     "main": "./lib/index.js",
     "type": "module",
