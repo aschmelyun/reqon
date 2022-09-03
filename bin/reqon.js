@@ -30,8 +30,10 @@ if (!existsSync(__reqon)) {
     mkdirSync(__reqon)
 }
 
-const adapter = new JSONFile(join(__reqon, 'db.json'))
-global.db = new Low(adapter)
+if (args.save !== false) {
+    const adapter = new JSONFile(join(__reqon, 'db.json'))
+    global.db = new Low(adapter)
+}
 
 figlet('reqon', {
     font: 'Speed',
@@ -44,10 +46,12 @@ figlet('reqon', {
     }
     console.clear()
     console.log(chalk.cyan.bold(data))
-    console.log('')  
+    console.log('')
 
-    await db.read()
-    db.data ||= { entries: [] }
+    if (typeof db !== 'undefined') {
+        await db.read()
+        db.data ||= { entries: [] }
+    }
 
     listener.use(express.json())
     listener.use(express.urlencoded({ extended: true })) 
