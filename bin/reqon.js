@@ -3,11 +3,13 @@ import chalk from 'chalk'
 import figlet from 'figlet'
 import express from 'express'
 import minimist from 'minimist'
-import { join } from 'path'
+import { join, dirname } from 'path'
 import { Low, JSONFile } from 'lowdb'
 import { homedir } from 'os'
 import { existsSync, mkdirSync } from 'fs'
 import listenerHandler from '../lib/routes/listener.js'
+import { fileURLToPath } from 'url'
+import prettyMs from 'pretty-ms'
 
 global.args = minimist(process.argv.slice(2))
 global.__reqon = join(homedir(), '.reqon')
@@ -66,8 +68,13 @@ figlet('reqon', {
 
     listener.all('/*', listenerHandler)
 
+    dashboard.set('view engine', 'ejs')
+    dashboard.set('views', join(dirname(fileURLToPath(import.meta.url)), '../lib/views'))
     dashboard.get('/', (req, res) => {
-        res.send('Dashboard!')
+        res.render('dashboard', {
+            prettyMs: prettyMs,
+            entries: db.data.entries
+        })
     })
 
     listener.listen(args.port, () => {
@@ -77,7 +84,7 @@ figlet('reqon', {
     })
 
     if (args.dashboard !== false) {
-        dashboard.listen(args.dashboardPort, () => {
+        dashboard.listen(args['dashboard-port'], () => {
             console.log(chalk.white('View requests in the dashboard'))
             console.log(chalk.cyan.bold.underline(`http://localhost:${args['dashboard-port']}`))
         })
