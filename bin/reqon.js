@@ -7,8 +7,13 @@ import { join } from 'path'
 import { Low, JSONFile } from 'lowdb'
 import { homedir } from 'os'
 import { existsSync, mkdirSync } from 'fs'
+import listenerHandler from '../lib/routes/listener.js'
 
 global.args = minimist(process.argv.slice(2))
+global.__reqon = join(homedir(), '.reqon')
+if (!existsSync(__reqon)) {
+    mkdirSync(__reqon)
+}
 
 const listener = express()
 const dashboard = express()
@@ -28,15 +33,13 @@ if (!args.hasOwnProperty('save-max')) {
     args['save-max'] = 100
 }
 
-import listenerHandler from '../lib/routes/listener.js'
-
-global.__reqon = join(homedir(), '.reqon')
-if (!existsSync(__reqon)) {
-    mkdirSync(__reqon)
+// set the default file used in lowdb to ~/.reqon/db.json
+if (!args.hasOwnProperty('save-file')) {
+    args['save-file'] = join(__reqon, 'db.json')
 }
 
 if (args.save !== false) {
-    const adapter = new JSONFile(join(__reqon, 'db.json'))
+    const adapter = new JSONFile(args['save-file'])
     global.db = new Low(adapter)
 }
 
