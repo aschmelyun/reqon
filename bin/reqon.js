@@ -65,7 +65,7 @@ figlet('reqon', {
         console.log('')
     })
 
-    if (args.hasOwnProperty('disable-dashboard')) {
+    if (!args.hasOwnProperty('disable-dashboard')) {
         dashboard.listen(args.dashboardPort, () => {
             console.log(chalk.white('View requests in the dashboard'))
             console.log(chalk.cyan.bold.underline(`http://localhost:${args['dashboard-port']}`))
