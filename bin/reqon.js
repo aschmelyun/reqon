@@ -18,11 +18,6 @@ if (!args.hasOwnProperty('dashboard-port')) {
     args['dashboard-port'] = 8081
 }
 
-// set the dashboard as enabled by default
-if (!args.hasOwnProperty('disable-dashboard')) {
-    args['disable-dashboard'] = false
-}
-
 import listenerHandler from '../lib/routes/listener.js'
 
 figlet('reqon', {
@@ -53,7 +48,7 @@ figlet('reqon', {
         console.log('')
     })
 
-    if (!args['disable-dashboard']) {
+    if (args.hasOwnProperty('disable-dashboard')) {
         dashboard.listen(args.dashboardPort, () => {
             console.log(chalk.white('View requests in the dashboard'))
             console.log(chalk.cyan.bold.underline(`http://localhost:${args['dashboard-port']}`))
