@@ -3,6 +3,10 @@ import chalk from 'chalk'
 import figlet from 'figlet'
 import express from 'express'
 import minimist from 'minimist'
+import { join } from 'path'
+import { Low, JSONFile } from 'lowdb'
+import { homedir } from 'os'
+import { existsSync, mkdirSync } from 'fs'
 
 const args = minimist(process.argv.slice(2))
 const listener = express()
@@ -24,7 +28,7 @@ figlet('reqon', {
     font: 'Speed',
     verticalLayout: 'fitted',
     whitespaceBreak: true
-}, function(err, data) {
+}, async function(err, data) {
     if (err) {
         console.dir(chalk.white.bgRed.bold(err))
         return
@@ -32,6 +36,19 @@ figlet('reqon', {
     console.clear()
     console.log(chalk.cyan.bold(data))
     console.log('')
+
+    const __dirname = join(homedir(), '.reqon')
+
+    if (!existsSync(__dirname)) {
+        mkdirSync(__dirname)
+    }
+
+    const file = join(__dirname, 'db.json')
+    const adapter = new JSONFile(file)
+    global.db = new Low(adapter)
+
+    await db.read()
+    db.data ||= { entries: [] }
 
     listener.use(express.json())
     listener.use(express.urlencoded({ extended: true })) 
