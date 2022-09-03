@@ -23,6 +23,11 @@ if (!args.hasOwnProperty('dashboard-port')) {
     args['dashboard-port'] = 8081
 }
 
+// set the default maximum entries saved in the database as 100
+if (!args.hasOwnProperty('save-max')) {
+    args['save-max'] = 100
+}
+
 import listenerHandler from '../lib/routes/listener.js'
 
 global.__reqon = join(homedir(), '.reqon')
