@@ -73,7 +73,7 @@ figlet('reqon', {
     dashboard.get('/', (req, res) => {
         res.render('dashboard', {
             prettyMs: prettyMs,
-            entries: db.data.entries
+            entries: db.data.entries.slice().sort((a, b) => new Date(b.date) - new Date(a.date))
         })
     })
 
