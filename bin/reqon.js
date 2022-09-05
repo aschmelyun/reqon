@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import chalk from 'chalk'
-import figlet from 'figlet'
 import express from 'express'
 import minimist from 'minimist'
 import { join, dirname } from 'path'
@@ -10,6 +9,10 @@ import { existsSync, mkdirSync } from 'fs'
 import listenerHandler from '../lib/routes/listener.js'
 import { fileURLToPath } from 'url'
 import prettyMs from 'pretty-ms'
+
+process.stdout.write(
+    String.fromCharCode(27) + "]0;" + "reqon - listening" + String.fromCharCode(7)
+)
 
 global.args = minimist(process.argv.slice(2))
 global.__reqon = join(homedir(), '.reqon')
@@ -45,48 +48,44 @@ if (args.save !== false) {
     global.db = new Low(adapter)
 }
 
-figlet('reqon', {
-    font: 'Speed',
-    verticalLayout: 'fitted',
-    whitespaceBreak: true
-}, async function(err, data) {
-    if (err) {
-        console.dir(chalk.white.bgRed.bold(err))
-        return
-    }
-    console.clear()
-    console.log(chalk.cyan.bold(data))
-    console.log('')
+console.clear()
+console.log('')
+console.log(chalk.cyan.bold("┏━┓ ┏━━┓ ┏━━┓ ┏━━┓ ┏━┓ "))
+console.log(chalk.cyan.bold("┃┏┛ ┃┃━┫ ┃┏┓┃ ┃┏┓┃ ┃┏┓┓"))
+console.log(chalk.cyan.bold("┃┃  ┃┃━┫ ┃┗┛┃ ┃┗┛┃ ┃┃┃┃"))
+console.log(chalk.cyan.bold("┗┛  ┗━━┛ ┗━┓┃ ┗━━┛ ┗┛┗┛"))
+console.log(chalk.cyan.bold("           ┗┛          "))
+console.log('')
 
-    if (typeof db !== 'undefined') {
-        await db.read()
-        db.data ||= { entries: [] }
-    }
+if (typeof db !== 'undefined') {
+    await db.read()
+    db.data ||= { entries: [] }
+}
 
-    listener.use(express.json())
-    listener.use(express.urlencoded({ extended: true })) 
+listener.use(express.json())
+listener.use(express.urlencoded({ extended: true })) 
 
-    listener.all('/*', listenerHandler)
+listener.all('/*', listenerHandler)
 
-    dashboard.set('view engine', 'ejs')
-    dashboard.set('views', join(dirname(fileURLToPath(import.meta.url)), '../lib/views'))
-    dashboard.get('/', (req, res) => {
-        res.render('dashboard', {
-            prettyMs: prettyMs,
-            entries: db.data.entries.slice().sort((a, b) => new Date(b.date) - new Date(a.date))
-        })
+dashboard.set('view engine', 'ejs')
+dashboard.set('views', join(dirname(fileURLToPath(import.meta.url)), '../lib/views'))
+dashboard.get('/', (req, res) => {
+    res.render('dashboard', {
+        prettyMs: prettyMs,
+        entries: db.data.entries.slice().sort((a, b) => new Date(b.date) - new Date(a.date))
     })
+})
 
-    listener.listen(args.port, () => {
-        console.log(chalk.white('Listening for new requests'))
-        console.log(chalk.cyan.bold.underline(`http://localhost:${args['port']}`))
+listener.listen(args.port, () => {
+    console.log(chalk.white('Listening for new requests'))
+    console.log(chalk.cyan.bold.underline(`http://localhost:${args['port']}`))
+    console.log('')
+})
+
+if (args.dashboard !== false) {
+    dashboard.listen(args['dashboard-port'], () => {
+        console.log(chalk.white('View requests in the dashboard'))
+        console.log(chalk.cyan.bold.underline(`http://localhost:${args['dashboard-port']}`))
         console.log('')
     })
-
-    if (args.dashboard !== false) {
-        dashboard.listen(args['dashboard-port'], () => {
-            console.log(chalk.white('View requests in the dashboard'))
-            console.log(chalk.cyan.bold.underline(`http://localhost:${args['dashboard-port']}`))
-        })
-    }
-})
+}

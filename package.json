@@ -15,7 +15,6 @@
         "chalk": "^5.0.1",
         "ejs": "^3.1.8",
         "express": "^4.18.1",
-        "figlet": "^1.5.2",
         "log-timestamp": "^0.3.0",
         "lowdb": "^3.0.0",
         "minimist": "^1.2.6",
