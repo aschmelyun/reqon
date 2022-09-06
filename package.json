@@ -18,7 +18,7 @@
     },
     "scripts": {
         "test": "echo \"Error: no tests yet :(\" && exit 1",
-        "build": "tsc"
+        "build": "tsc && shx mkdir -p lib/Views && shx cp src/Views/dashboard.ejs lib/Views/dashboard.ejs"
     },
     "dependencies": {
         "chalk": "^5.0.1",
@@ -61,6 +61,7 @@
         "@types/express": "^4.17.13",
         "@types/lowdb": "^1.0.11",
         "@types/minimist": "^1.2.2",
+        "shx": "^0.3.4",
         "typescript": "^4.8.2"
     }
 }
