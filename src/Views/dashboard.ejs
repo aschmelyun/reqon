@@ -4,6 +4,16 @@
 <head>
     <title>Reqon Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        table.w-full tr td { border-top-width: 1px }
+        table.w-full tr td:first-child { border-left-width: 1px }
+        table.w-full tr td:last-child { border-right-width: 1px }
+        table.w-full tr:last-child td { border-bottom-width: 1px }
+        table.w-full tr:last-child td:last-child { border-radius: 0 0 0.25rem 0 }
+        table.w-full tr:first-child td:last-child { border-radius: 0 0.25rem 0 0 }
+        table.w-full tr:last-child td:first-child { border-radius: 0 0 0 0.25rem }
+        table.w-full tr:first-child td:first-child { border-radius: 0.25rem 0 0 0 }
+    </style>
 </head>
 
 <body class="bg-gray-100">
@@ -15,12 +25,12 @@
                         <div class="flex-shrink-0 text-3xl">📡</div>
                         <div class="hidden md:block">
                             <div class="ml-4 flex items-baseline">
-                                <a href="#" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+                                <a href="/" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
                                     aria-current="page">Reqon</a>
                             </div>
                         </div>
                     </div>
-                    <div class="hidden md:block">
+                    <div>
                         <div class="ml-4 flex items-center md:ml-6">
                             <span class="text-sm font-semibold" id="countup">0s ago</span>
                             <button type="button"
@@ -67,24 +77,10 @@
                                         <tbody>
                                             <% Object.keys(entry.headers).forEach(function(header) { %>
                                                 <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                    <%
-                                                        let leftClass = 'border-t border-l'
-                                                        let rightClass = 'border-t border-r'
-
-                                                        if (Object.keys(entry.headers).indexOf(header) === 0) {
-                                                            leftClass += ' rounded-tl'
-                                                            rightClass += ' rounded-tr'
-                                                        }
-
-                                                        if (Object.keys(entry.headers).indexOf(header) === (Object.keys(entry.headers).length - 1)) {
-                                                            leftClass += ' border-b rounded-bl'
-                                                            rightClass += ' border-b rounded-br'
-                                                        }
-                                                    %>
-                                                    <td class="p-3 font-semibold text-right border-gray-200 w-48 <%= leftClass %>">
+                                                    <td class="p-3 font-semibold text-right border-gray-200 w-48">
                                                         <%= header %>
                                                     </td>
-                                                    <td class="p-3 border-gray-200 <%= rightClass %>">
+                                                    <td class="p-3 border-gray-200">
                                                         <%= entry.headers[header] %>
                                                     </td>
                                                 </tr>
@@ -100,24 +96,10 @@
                                         <tbody>
                                             <% Object.keys(entry.query).forEach(function(str) { %>
                                                 <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                    <%
-                                                        let leftClass = 'border-t border-l'
-                                                        let rightClass = 'border-t border-r'
-
-                                                        if (Object.keys(entry.query).indexOf(str) === 0) {
-                                                            leftClass += ' rounded-tl'
-                                                            rightClass += ' rounded-tr'
-                                                        }
-
-                                                        if (Object.keys(entry.query).indexOf(str) === (Object.keys(entry.query).length - 1)) {
-                                                            leftClass += ' border-b rounded-bl'
-                                                            rightClass += ' border-b rounded-br'
-                                                        }
-                                                    %>
-                                                    <td class="p-3 font-semibold text-right border-gray-200 w-48 <%= leftClass %>">
+                                                    <td class="p-3 font-semibold text-right border-gray-200 w-48">
                                                         <%= str %>
                                                     </td>
-                                                    <td class="p-3 border-gray-200 <%= rightClass %>">
+                                                    <td class="p-3 border-gray-200">
                                                         <%= entry.query[str] %>
                                                     </td>
                                                 </tr>
@@ -133,24 +115,10 @@
                                         <tbody>
                                             <% Object.keys(entry.body).forEach(function(key) { %>
                                                 <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                    <%
-                                                        let leftClass = 'border-t border-l'
-                                                        let rightClass = 'border-t border-r'
-
-                                                        if (Object.keys(entry.body).indexOf(key) === 0) {
-                                                            leftClass += ' rounded-tl'
-                                                            rightClass += ' rounded-tr'
-                                                        }
-
-                                                        if (Object.keys(entry.body).indexOf(key) === (Object.keys(entry.body).length - 1)) {
-                                                            leftClass += ' border-b rounded-bl'
-                                                            rightClass += ' border-b rounded-br'
-                                                        }
-                                                    %>
-                                                    <td class="p-3 font-semibold text-right border-gray-200 w-48 <%= leftClass %>">
+                                                    <td class="p-3 font-semibold text-right border-gray-200 w-48">
                                                         <%= key %>
                                                     </td>
-                                                    <td class="p-3 border-gray-200 <%= rightClass %>">
+                                                    <td class="p-3 border-gray-200">
                                                         <%= entry.body[key] %>
                                                     </td>
                                                 </tr>
