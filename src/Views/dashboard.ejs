@@ -56,7 +56,7 @@
                                 <div class="p-4 text-right">
                                     <div class="font-medium">
                                         <%= entry.date %>
-                                        <span class="block text-xs text-gray-500"><%= prettyMs(new Date() - new Date(entry.date), { compact: true }) %> ago</span>
+                                        <span class="block text-xs text-gray-500"><%= prettyMs(new Date().valueOf() - new Date(entry.date).valueOf(), { compact: true }) %> ago</span>
                                     </div>
                                 </div>
                             </div>
