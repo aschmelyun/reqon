@@ -104,7 +104,7 @@ export default class Reqon {
     }
     initDashboard(): Reqon {
         this.dashboard.set('view engine', 'ejs')
-        this.dashboard.set('views', join(dirname(fileURLToPath(import.meta.url)), '../lib/views'))
+        this.dashboard.set('views', join(dirname(fileURLToPath(import.meta.url)), '../lib/Views'))
         this.dashboard.get('/', (req: Request, res: Response) => {
             res.render('dashboard', {
                 prettyMs: prettyMs,
