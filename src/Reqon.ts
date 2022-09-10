@@ -37,7 +37,8 @@ export default class Reqon {
                 'port',
                 'dashboard-port',
                 'save-max',
-                'save-file'
+                'save-file',
+                'help',
             ],
             boolean: [
                 'save',
@@ -50,6 +51,9 @@ export default class Reqon {
                 'save-file': join(this.reqonDir, 'db.json'),
                 'save': true,
                 'dashboard': true
+            },
+            alias: {
+                v: 'help'
             }
         })
 
@@ -70,6 +74,12 @@ export default class Reqon {
         if (this.db) {
             await this.db.read()
             this.db.data ||= { entries: [] }
+        }
+
+        if (this.args.hasOwnProperty('help')) {
+            // handle displaying usage
+            console.log(chalk.yellow.bold("Usage: ") + chalk.gray("reqon"))
+            process.exit()
         }
 
         return this
