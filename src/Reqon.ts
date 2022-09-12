@@ -77,12 +77,14 @@ export default class Reqon {
         }
 
         if (this.args.hasOwnProperty('help')) {
-            // handle displaying usage
-            console.log(chalk.yellow.bold("Usage: ") + chalk.gray("reqon"))
-            process.exit()
+            this.drawHelp()
         }
 
         return this
+    }
+    drawHelp(): void {
+        console.log(chalk.yellow.bold("Usage: ") + chalk.white("reqon"))
+        process.exit()
     }
     drawTitle(): Reqon {
         console.clear()
