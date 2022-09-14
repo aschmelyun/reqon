@@ -7,15 +7,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
-    <style>
-        table.w-full tr td { border-top-width: 1px }
-        table.w-full tr td:first-child { border-left-width: 1px }
-        table.w-full tr td:last-child { border-right-width: 1px }
-        table.w-full tr:last-child td { border-bottom-width: 1px }
-        table.w-full tr:last-child td:last-child { border-radius: 0 0 0.25rem 0 }
-        table.w-full tr:first-child td:last-child { border-radius: 0 0.25rem 0 0 }
-        table.w-full tr:last-child td:first-child { border-radius: 0 0 0 0.25rem }
-        table.w-full tr:first-child td:first-child { border-radius: 0.25rem 0 0 0 }
+    <style type="text/tailwindcss">
+        table { @apply w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate border-spacing-0 }
+        table tr { @apply bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600 }
+        table tr td { border-top-width: 1px }
+        table tr td:first-child { border-left-width: 1px }
+        table tr td:last-child { border-right-width: 1px }
+        table tr:last-child td { border-bottom-width: 1px }
+        table tr:last-child td:last-child { border-radius: 0 0 0.25rem 0 }
+        table tr:first-child td:last-child { border-radius: 0 0.25rem 0 0 }
+        table tr:last-child td:first-child { border-radius: 0 0 0 0.25rem }
+        table tr:first-child td:first-child { border-radius: 0.25rem 0 0 0 }
+        h2 { @apply text-xl font-semibold text-gray-900 mb-2 }
     </style>
 </head>
 
@@ -75,12 +78,12 @@
                             </div>
                             <div class="pt-4 pb-6 px-6">
                                 <div>
-                                    <h2 class="text-xl font-semibold text-gray-900 mb-2">Headers</h2>
+                                    <h2>Headers</h2>
                                     <div class="overflow-x-auto">
-                                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate border-spacing-0">
+                                        <table>
                                             <tbody>
                                                 <% Object.keys(entry.headers).forEach(function(header) { %>
-                                                    <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                    <tr>
                                                         <td class="p-3 font-semibold text-right border-gray-200 w-48">
                                                             <%= header %>
                                                         </td>
@@ -95,13 +98,13 @@
                                 </div>
                                 <% if (Object.keys(entry.query).length) { %>
                                     <div class="mt-8">
-                                        <h2 class="text-xl font-semibold text-gray-900 mb-2">URL Query</h2>
+                                        <h2>URL Query</h2>
                                     </div>
                                     <div class="overflow-x-auto">
-                                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate border-spacing-0">
+                                        <table>
                                             <tbody>
                                                 <% Object.keys(entry.query).forEach(function(str) { %>
-                                                    <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                    <tr>
                                                         <td class="p-3 font-semibold text-right border-gray-200 w-48">
                                                             <%= str %>
                                                         </td>
@@ -116,13 +119,13 @@
                                 <% } %>
                                 <% if (Object.keys(entry.body).length) { %>
                                     <div class="mt-8">
-                                        <h2 class="text-xl font-semibold text-gray-900 mb-2">Request Body</h2>
+                                        <h2>Request Body</h2>
                                     </div>
                                     <div class="overflow-x-auto">
-                                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-separate border-spacing-0">
+                                        <table>
                                             <tbody>
                                                 <% Object.keys(entry.body).forEach(function(key) { %>
-                                                    <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                    <tr>
                                                         <td class="p-3 font-semibold text-right border-gray-200 w-48">
                                                             <%= key %>
                                                         </td>
