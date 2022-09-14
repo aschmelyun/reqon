@@ -35,9 +35,10 @@ export default class Interceptor {
             await db.write()
         }
 
-        res.send('Receieved!')
+        res.status(Interceptor.status(req)).json({ message: "received" })
     }
-    static output(req: Request, key: "headers" | "query" | "body", title: string) {
+
+    static output(req: Request, key: "headers" | "query" | "body", title: string): void {
         if (!req[key] || !Object.keys(req[key]).length) {
             return
         }
@@ -48,5 +49,20 @@ export default class Interceptor {
         Object.keys(req[key]).forEach(item => {
             console.log(chalk.grey.bold(item + ': ') + chalk.white(JSON.stringify(req[key][item], null, 2)))
         })
+    }
+
+    static status(req: Request): number {
+        let statuses = [200, 204, 301, 302, 304, 307, 308, 400, 401, 403, 404, 408, 410, 429, 500, 502, 503, 504]
+
+        if (Object.keys(req.headers).includes('reqon-status')) {
+            let status = req.headers['reqon-status'] ?? '200'
+                status = Array.isArray(status) ? status.join('') : status
+
+            if (statuses.includes(parseInt(status))) {
+                return parseInt(status)
+            }
+        }
+
+        return 200
     }
 }
