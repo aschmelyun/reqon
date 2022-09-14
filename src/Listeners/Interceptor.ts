@@ -46,7 +46,7 @@ export default class Interceptor {
         console.log(chalk.cyan.bold('_________________________________'))
         console.log(chalk.cyan.bold(title))
         Object.keys(req[key]).forEach(item => {
-            console.log(chalk.grey.bold(item + ': ') + chalk.white(req[key][item]))
+            console.log(chalk.grey.bold(item + ': ') + chalk.white(JSON.stringify(req[key][item])))
         })
     }
 }
