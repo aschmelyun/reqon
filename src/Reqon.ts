@@ -1,14 +1,14 @@
 import chalk from 'chalk'
 import { homedir } from 'os'
-import express, { Application, Request, Response } from 'express'
-import minimist, { ParsedArgs } from 'minimist'
 import prettyMs from 'pretty-ms'
 import { fileURLToPath } from 'url'
 import { join, dirname } from 'path'
 import { Low, JSONFile } from 'lowdb'
-import { existsSync, mkdirSync } from 'fs'
 import Entry from './Interfaces/Entry.js'
+import { existsSync, mkdirSync } from 'fs'
+import minimist, { ParsedArgs } from 'minimist'
 import Interceptor from './Listeners/Interceptor.js'
+import express, { Application, Request, Response } from 'express'
 
 export default class Reqon {
     db: null|Low<{ entries: Entry[] }>
@@ -17,6 +17,9 @@ export default class Reqon {
     listener: Application
     dashboard: Application
 
+    /**
+     * Initialize the main class and start the application
+     */
     static run(): void {
         const reqon = new Reqon()
         reqon.setup()
@@ -26,6 +29,13 @@ export default class Reqon {
                     .initDashboard()
             })
     }
+
+    /**
+     * Set up reqon's data directory, by default at ~/.reqon
+     * Parse arguments from the command-line and set their defaults
+     * Set up the main reqon listener and the dashboard web server
+     * Initialize the adapter for LowDB, by default at ~/.reqon/db.json
+     */
     constructor() {
         this.reqonDir = join(homedir(), '.reqon')
         if (!existsSync(this.reqonDir)) {
@@ -66,6 +76,13 @@ export default class Reqon {
             this.db = new Low(adapter)
         }
     }
+
+    /**
+     * Configures the terminal window title
+     * Sets up the database
+     * Determines if the --help argument was passed
+     * @returns Promise<Reqon>
+     */
     async setup(): Promise<Reqon> {
         process.stdout.write(
             String.fromCharCode(27) + "]0;" + "reqon - listening" + String.fromCharCode(7)
@@ -83,6 +100,11 @@ export default class Reqon {
 
         return this
     }
+    
+    /**
+     * Fired off if the --help argument was passed in
+     * Draws a block of text for usage basics and the list of options
+     */
     drawHelp(): void {
         console.log(chalk.cyan.bold("Description: ") + chalk.white("effortlessly intercept and inspect http requests."))
         console.log("")
@@ -99,6 +121,11 @@ export default class Reqon {
         console.log("")
         process.exit()
     }
+    
+    /**
+     * Some sick ascii art
+     * @returns Reqon
+     */
     drawTitle(): Reqon {
         console.clear()
         console.log('')
@@ -111,6 +138,12 @@ export default class Reqon {
 
         return this
     }
+
+    /**
+     * Fires off the listener for the main reqon express webserver
+     * Listens to any urls, using any http method, and passes everything to the interceptor handler
+     * @returns Reqon
+     */
     initListener(): Reqon {
         this.listener.use(express.json())
         this.listener.use(express.urlencoded({ extended: true })) 
@@ -127,6 +160,13 @@ export default class Reqon {
 
         return this
     }
+
+    /**
+     * Fires off the listener for the reqon dashboard webserver
+     * Listens to just the main root url, and returns back a dashboard view
+     * If the user passes in the --no-dashboard argument, don't boot up the listener
+     * @returns Reqon
+     */
     initDashboard(): Reqon {
         this.dashboard.set('view engine', 'ejs')
         this.dashboard.set('views', join(dirname(fileURLToPath(import.meta.url)), '../lib/Views'))
