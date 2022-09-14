@@ -63,6 +63,15 @@ export default class Interceptor {
             }
         }
 
+        if (Object.keys(req.query).includes('reqon-status')) {
+            let status = req.query['reqon-status'] ?? '200'
+                status = Array.isArray(status) ? status.join('').toString() : status.toString()
+                
+            if (statuses.includes(parseInt(status))) {
+                return parseInt(status)
+            }
+        }
+
         return 200
     }
 }
