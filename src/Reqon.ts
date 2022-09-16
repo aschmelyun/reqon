@@ -3,6 +3,7 @@ import { homedir } from 'os'
 import prettyMs from 'pretty-ms'
 import { fileURLToPath } from 'url'
 import { join, dirname } from 'path'
+import Draw from './Actions/Draw.js'
 import { Low, JSONFile } from 'lowdb'
 import Entry from './Interfaces/Entry.js'
 import { existsSync, mkdirSync } from 'fs'
@@ -24,8 +25,8 @@ export default class Reqon {
         const reqon = new Reqon()
         reqon.setup()
             .then(() => {
-                reqon.drawTitle()
-                    .initListener()
+                Draw.title()
+                reqon.initListener()
                     .initDashboard()
             })
     }
@@ -94,8 +95,9 @@ export default class Reqon {
         }
 
         if (this.args.hasOwnProperty('help')) {
-            this.drawTitle()
-                .drawHelp()
+            Draw.title()
+            Draw.help()
+            process.exit()
         }
 
         return this
