@@ -6,11 +6,11 @@
 [![Node 16.0.0 or higher](https://img.shields.io/node/v/reqon)](https://npmjs.com/package/reqon)
 [![Total Downloads](https://img.shields.io/npm/dt/reqon)](https://npmjs.com/package/reqon)
 
-> :satellite: Effortlessly intercept and inspect http requests.
+> Effortlessly intercept and inspect http requests. :satellite:
 
-Reqon is a streamlined cli tool designed to run locally and capture any http requests sent to it. Perfect for determining incoming webhook payloads or testing outgoing local requests to production or third-party systems. Simply swap your endpoint url with the reqon domain, and fire away! Use it in conjunction with a tunnelling app like [ngrok](https://ngrok.com) to expose reqon's interceptor outside your local network.
+Reqon is a streamlined cli tool designed to run locally and capture any http requests sent to it. Perfect for determining incoming webhook payloads or testing outgoing local requests before they hit production or third-party applications. Simply swap your endpoint url with the reqon domain, and fire away! 
 
-Captured request details are displayed in the terminal and stored in a local JSON file powered by [LowDB](https://github.com/typicode/lowdb). You can also open up the dashboard to see current and past saved requests in a simplistic but effective layout.
+Captured request details are displayed in the terminal and stored in a local JSON file powered by [LowDB](https://github.com/typicode/lowdb). You can open up the dashboard to see current and past saved requests in a simplistic but effective layout.
 
 ## Installation
 
@@ -19,6 +19,7 @@ Installation is through npm and requires node version >= 16.0.0.
 ```bash
 npm install -g reqon
 ```
+
 ## Usage
 
 Reqon's detailed usage is shown below.
@@ -42,6 +43,8 @@ There are defaults associated with some of the options above:
 - **dashboard-port** default is `8081`
 - **save-max** default is `50`
 - **save-file** default is `~/.reqon/db.json`
+
+> Tip: You can use a tunnelling app like [ngrok](https://ngrok.com) to expose reqon's interceptor outside your local network.
 
 ## Contact
 
