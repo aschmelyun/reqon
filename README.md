@@ -6,11 +6,11 @@
 [![Node 16.0.0 or higher](https://img.shields.io/node/v/reqon)](https://npmjs.com/package/reqon)
 [![Total Downloads](https://img.shields.io/npm/dt/reqon)](https://npmjs.com/package/reqon)
 
-> Effortlessly intercept and inspect http requests.
+> :satellite: Effortlessly intercept and inspect http requests.
 
-Reqon is a streamlined cli tool designed to run locally and capture any http requests sent to it. Perfect for determining incoming webhook payloads or testing outgoing local requests to production or third-party systems.
+Reqon is a streamlined cli tool designed to run locally and capture any http requests sent to it. Perfect for determining incoming webhook payloads or testing outgoing local requests to production or third-party systems. Simply swap your endpoint url with the reqon domain, and fire away! Use it in conjunction with a tunnelling app like [ngrok](https://ngrok.com) to expose reqon's interceptor outside your local network.
 
-Simply swap your endpoint url with the reqon domain, and fire away! Use it in conjunction with a tunnelling app like [ngrok](https://ngrok.com) to expose reqon's interceptor outside your local network.
+Captured request details are displayed in the terminal and stored in a local JSON file powered by [LowDB](https://github.com/typicode/lowdb). You can also open up the dashboard to see current and past saved requests in a simplistic but effective layout.
 
 ## Installation
 
