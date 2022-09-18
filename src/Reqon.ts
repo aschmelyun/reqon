@@ -117,8 +117,7 @@ export default class Reqon {
         })
 
         this.listener.listen(this.args['port'], () => {
-            console.log(chalk.white('Listening for new requests'))
-            console.log(chalk.cyan.bold.underline(`http://localhost:${this.args['port']}`))
+            console.log(chalk.white.bold.bgCyan(' Listening ') + ' ' + chalk.white.underline(`http://localhost:${this.args['port']}`))
             console.log('')
         })
 
@@ -143,8 +142,7 @@ export default class Reqon {
 
         if (this.args['dashboard'] !== false) {
             this.dashboard.listen(this.args['dashboard-port'], () => {
-                console.log(chalk.white('View requests in the dashboard'))
-                console.log(chalk.cyan.bold.underline(`http://localhost:${this.args['dashboard-port']}`))
+                console.log(chalk.white.bold.bgCyan(' Dashboard ') + ' ' + chalk.white.underline(`http://localhost:${this.args['dashboard-port']}`))
                 console.log('')
             })
         }
