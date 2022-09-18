@@ -64,7 +64,7 @@ export default class Reqon {
                 'dashboard': true
             },
             alias: {
-                v: 'help'
+                h: 'help'
             }
         })
 
