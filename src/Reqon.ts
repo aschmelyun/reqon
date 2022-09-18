@@ -94,7 +94,7 @@ export default class Reqon {
             this.db.data ||= { entries: [] }
         }
 
-        if (this.args.hasOwnProperty('help')) {
+        if (this.args.hasOwnProperty('help') || this.args._.includes('help')) {
             Draw.title()
             Draw.help()
             process.exit()
