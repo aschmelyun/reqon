@@ -1,4 +1,5 @@
 import chalk from 'chalk'
+import multer from 'multer'
 import { homedir } from 'os'
 import prettyMs from 'pretty-ms'
 import { fileURLToPath } from 'url'
@@ -109,10 +110,12 @@ export default class Reqon {
      * @returns Reqon
      */
     initListener(): Reqon {
-        this.listener.use(express.json())
-        this.listener.use(express.urlencoded({ extended: true })) 
+        const upload = multer({ dest: join(this.reqonDir, 'files') })
 
-        this.listener.all('/*', (req: Request, res: Response) => {
+        this.listener.use(express.json())
+        this.listener.use(express.urlencoded({ extended: true }))
+
+        this.listener.all('/*', upload.any(), (req: Request, res: Response) => {
             Interceptor.handle(req, res, this.db, this.args)
         })
 
