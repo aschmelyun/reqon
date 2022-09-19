@@ -50,6 +50,7 @@ export default class Reqon {
                 'dashboard-port',
                 'save-max',
                 'save-file',
+                'files-dir',
                 'help',
             ],
             boolean: [
@@ -61,6 +62,7 @@ export default class Reqon {
                 'dashboard-port': 8081,
                 'save-max': 100,
                 'save-file': join(this.reqonDir, 'db.json'),
+                'files-dir': join(this.reqonDir, 'files'),
                 'save': true,
                 'dashboard': true
             },
@@ -110,7 +112,7 @@ export default class Reqon {
      * @returns Reqon
      */
     initListener(): Reqon {
-        const upload = multer({ dest: join(this.reqonDir, 'files') })
+        const upload = multer({ dest: this.args['files-dir'] })
 
         this.listener.use(express.json())
         this.listener.use(express.urlencoded({ extended: true }))

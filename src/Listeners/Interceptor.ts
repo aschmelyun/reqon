@@ -2,7 +2,8 @@ import chalk from 'chalk'
 import { Low } from 'lowdb'
 import { ParsedArgs } from 'minimist'
 import Entry from '../Interfaces/Entry.js'
-import { Request, Response } from 'express'
+import { Request, Response, Express } from 'express'
+import pb from 'pretty-bytes'
 
 export default class Interceptor {
 
@@ -26,6 +27,7 @@ export default class Interceptor {
         Interceptor.output(req, 'headers', 'HEADERS')
         Interceptor.output(req, 'query', 'URL QUERY')
         Interceptor.output(req, 'body', 'REQUEST BODY')
+        Interceptor.files(req)
         
         console.log('')
 
@@ -68,6 +70,22 @@ export default class Interceptor {
         Object.keys(req[key]).forEach(item => {
             console.log(chalk.grey.bold(item + ': ') + chalk.white(JSON.stringify(req[key][item], null, 2)))
         })
+    }
+
+    static files(req: Request): void {
+        if (!req['files']) {
+            return
+        }
+        
+        console.log('')
+        console.log(chalk.cyan.bold('_________________________________'))
+        console.log(chalk.cyan.bold('FILES'))
+        
+        if (req.files.constructor === Array) {
+            req.files.forEach((file: Express.Multer.File) => {
+                console.log(chalk.grey.bold(file.fieldname + ': ') + chalk.white(file.originalname + ' [' + pb(file.size) + ']'))
+            })
+        }
     }
 
     /**

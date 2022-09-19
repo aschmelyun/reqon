@@ -28,6 +28,7 @@
         "lowdb": "^3.0.0",
         "minimist": "^1.2.6",
         "multer": "^1.4.5-lts.1",
+        "pretty-bytes": "^6.0.0",
         "pretty-ms": "^8.0.0"
     },
     "bin": {
