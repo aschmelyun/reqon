@@ -4,6 +4,8 @@ import { ParsedArgs } from 'minimist'
 import Entry from '../Interfaces/Entry.js'
 import { Request, Response, Express } from 'express'
 import pb from 'pretty-bytes'
+import { readdir } from 'node:fs/promises'
+import { statSync, unlinkSync } from 'node:fs'
 
 export default class Interceptor {
 
@@ -43,10 +45,27 @@ export default class Interceptor {
             })
 
             if (db?.data?.entries.length && db?.data?.entries.length > args['save-max']) {
-                db?.data?.entries.splice(0, 1)
-            } 
+                db.data.entries = db?.data?.entries.slice().sort((a: Entry, b: Entry) => new Date(b.date).valueOf() - new Date(a.date).valueOf()).slice(0, args['save-max'])
+            }
 
             await db.write()
+        }
+        
+        let files = await readdir(args['files-dir'])
+        files = files.filter(item => !(/(^|\/)\.[^\/\.]/g).test(item))
+            .map(fileName => ({
+                name: fileName,
+                time: statSync(`${args['files-dir']}/${fileName}`).mtime.getTime()
+            }))
+            .sort((a, b) => b.time - a.time)
+            .map(file => file.name)
+
+        if (files.length > args['save-max']) {
+            let filesToRemove = files.slice(args['save-max'] - files.length)
+
+            filesToRemove.forEach((file) => {
+                unlinkSync(`${args['files-dir']}/${file}`)
+            })
         }
 
         res.status(Interceptor.status(req)).json({ message: "received" })
