@@ -138,6 +138,27 @@
                                         </table>
                                     </div>
                                 <% } %>
+                                <% if (entry.files && entry.files.length) { %>
+                                    <div class="mt-8">
+                                        <h2>Request Files</h2>
+                                    </div>
+                                    <div class="overflow-x-auto">
+                                        <table>
+                                            <tbody>
+                                                <% entry.files.forEach(function(file) { %>
+                                                    <tr>
+                                                        <td class="p-3 font-semibold text-right border-gray-200 w-48">
+                                                            <%= file.fieldname %>
+                                                        </td>
+                                                        <td class="p-3 border-gray-200">
+                                                            <img src="/reqon-files/<%= file.filename %>" class="max-w-48 max-h-48">
+                                                        </td>
+                                                    </tr>
+                                                <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <% } %>
                             </div>
                         </div>
                     <% }) %>

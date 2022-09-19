@@ -136,6 +136,7 @@ export default class Reqon {
      * @returns Reqon
      */
     initDashboard(): Reqon {
+        this.dashboard.use('/reqon-files', express.static(this.args['files-dir']))
         this.dashboard.set('view engine', 'ejs')
         this.dashboard.set('views', join(dirname(fileURLToPath(import.meta.url)), '../lib/Views'))
         this.dashboard.get('/', (req: Request, res: Response) => {

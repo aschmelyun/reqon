@@ -38,7 +38,8 @@ export default class Interceptor {
                 date: date.toLocaleString('en-US'),
                 headers: req.headers,
                 query: req.query,
-                body: req.body
+                body: req.body,
+                files: req.files?.constructor === Array ? req.files : []
             })
 
             if (db?.data?.entries.length && db?.data?.entries.length > args['save-max']) {
