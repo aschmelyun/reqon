@@ -21,6 +21,7 @@ export default class Draw {
         console.log(chalk.white("  --dashboard-port=<port>") + "     " + chalk.gray("sets the port the dashboard is available on"))
         console.log(chalk.white("  --save-max=<number>") + "         " + chalk.gray("changes the max number of entries saved locally"))
         console.log(chalk.white("  --save-file=<path>") + "          " + chalk.gray("changes the filepath used for local db, json ext required"))
+        console.log(chalk.white("  --files-dir=<path>") + "          " + chalk.gray("changes the directory that request images are stored in"))
         console.log(chalk.white("  --no-dashboard") + "              " + chalk.gray("disables the dashboard, --dashboard-port is ignored"))
         console.log(chalk.white("  --no-save") + "                   " + chalk.gray("disables saving locally, --save-file + --save-max ignored"))
         console.log(chalk.white("  --help") + "                      " + chalk.gray("what you're seeing right now :)"))

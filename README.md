@@ -32,6 +32,7 @@ options:
   --dashboard-port=<port>     sets the port the dashboard is available on
   --save-max=<number>         changes the max number of entries saved locally
   --save-file=<path>          changes the filepath used for local db, json ext required
+  --files-dir=<path>          changes the directory that request images are stored in
   --no-dashboard              disables the dashboard, --dashboard-port is ignored
   --no-save                   disables saving locally, --save-file + --save-max ignored
   --help                      what you're seeing right now :)
@@ -43,6 +44,7 @@ There are defaults associated with some of the options above:
 - **dashboard-port** default is `8081`
 - **save-max** default is `50`
 - **save-file** default is `~/.reqon/db.json`
+- **files-dir** default is `~/.reqon/files`
 
 > Tip: You can use a tunnelling app like [ngrok](https://ngrok.com) to expose reqon's interceptor outside your local network.
 
