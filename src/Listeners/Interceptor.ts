@@ -12,10 +12,10 @@ export default class Interceptor {
      * Outputs headers, query, and request body variables to the terminal
      * Records those same attributes to a LowDB database
      * Returns back a simple JSON object and an alternate status code if requested
-     * @param req 
-     * @param res 
-     * @param db 
-     * @param args 
+     * @param req Request
+     * @param res Response
+     * @param db null|Low<{ entries: Entry[] }>
+     * @param args ParsedArgs
      */
     static async handle(req: Request, res: Response, db: null|Low<{ entries: Entry[] }>, args: ParsedArgs) {
         console.log('')
@@ -54,10 +54,10 @@ export default class Interceptor {
     /**
      * Helper method used in handle() to format and output request attributes to the terminal
      * Separates each section by a line, adds a header, and dumps out each attribute's variables
-     * @param req 
-     * @param key 
-     * @param title 
-     * @returns 
+     * @param req Request
+     * @param key "headers" | "query" | "body"
+     * @param title string
+     * @returns void
      */
     static output(req: Request, key: "headers" | "query" | "body", title: string): void {
         if (!req[key] || !Object.keys(req[key]).length) {
@@ -72,6 +72,11 @@ export default class Interceptor {
         })
     }
 
+    /**
+     * Helper method used in handle() to format and output multipart/form-data files
+     * @param req Request
+     * @returns void
+     */
     static files(req: Request): void {
         if (!req['files']) {
             return
@@ -93,8 +98,8 @@ export default class Interceptor {
      * If reqon-status is present in a header or query variable,
      * And that status is one of the ones specified below,
      * Return that status code with the response back
-     * @param req 
-     * @returns 
+     * @param req Request
+     * @returns void
      */
     static status(req: Request): number {
         let statuses = [200, 204, 301, 302, 304, 307, 308, 400, 401, 403, 404, 408, 410, 429, 500, 502, 503, 504]
